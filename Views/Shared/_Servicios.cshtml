@@ -1,0 +1,17 @@
+@model List<Servicio>
+
+<div class="servicios-rejilla">
+    @foreach (var s in Model)
+    {
+        <article class="servicio">
+            <div class="servicio-foto">
+                <img src="@s.ImagenUrl" alt="@s.Nombre" loading="lazy" />
+                <span class="servicio-icono">@Iconos.Svg(s.Icono, 28)</span>
+            </div>
+            <h3>@s.Nombre</h3>
+            <p class="precio">@Texto.Pesos(s.Precio)</p>
+            <p class="tenue">@s.Descripcion</p>
+            <a class="boton secundario" asp-controller="Reservas" asp-action="Crear" asp-route-servicioId="@s.Id">Reservar @s.Nombre.ToLower()</a>
+        </article>
+    }
+</div>

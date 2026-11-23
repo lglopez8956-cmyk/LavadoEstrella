@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Inicio";
+    var servicios = (List<Servicio>)ViewData["Servicios"]!;
+    var empleados = (List<Empleado>)ViewData["Empleados"]!;
+}
+
+<section class="hero">
+    <div class="contenedor hero-contenido">
+        <h1>Servicio de lavado<br /><span>especializado estrella</span></h1>
+        <p class="hero-texto">Deja tu vehículo como nuevo con nuestro servicio profesional de lavado y cuidado autoespecializado.</p>
+        <ul class="hero-puntos">
+            <li>@Iconos.Svg("sparkles", 30)<span>Brillo garantizado</span></li>
+            <li>@Iconos.Svg("shield", 30)<span>Productos premium</span></li>
+            <li>@Iconos.Svg("clock", 30)<span>Servicio rápido</span></li>
+        </ul>
+        <a class="boton grande" asp-controller="Reservas" asp-action="Crear">@Iconos.Svg("calendar", 22) Reservar ahora</a>
+    </div>
+</section>
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Nuestros servicios</p>
+    <h2 class="titulo-seccion">El cuidado que tu vehículo merece</h2>
+    @await Html.PartialAsync("_Servicios", servicios)
+</section>
+
+<section class="contenedor">
+    <div class="banda-reserva">
+        <div class="banda-info">
+            <span class="banda-icono">@Iconos.Svg("calendar", 44)</span>
+            <div>
+                <p class="eyebrow amarillo">Reserva tu cita</p>
+                <h2>Agenda tu servicio</h2>
+                <ul class="checks">
+                    <li><span class="check">@Iconos.Svg("check", 14)</span> Elige el servicio que necesitas</li>
+                    <li><span class="check">@Iconos.Svg("check", 14)</span> Selecciona fecha y hora</li>
+                    <li><span class="check">@Iconos.Svg("check", 14)</span> Nosotros nos encargamos del resto</li>
+                </ul>
+            </div>
+        </div>
+        <form method="get" asp-controller="Reservas" asp-action="Crear" class="banda-form">
+            <label class="sr-only" for="inicio-servicio">Servicio</label>
+            <select id="inicio-servicio" name="servicioId" required>
+                <option value="">Selecciona un servicio</option>
+                @foreach (var s in servicios)
+                {
+                    <option value="@s.Id">@s.Nombre · @Texto.Pesos(s.Precio)</option>
+                }
+            </select>
+            <label class="sr-only" for="inicio-fecha">Fecha</label>
+            <input id="inicio-fecha" type="date" name="fecha" min="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+            <label class="sr-only" for="inicio-hora">Hora</label>
+            <select id="inicio-hora" name="hora" required>
+                <option value="">Hora</option>
+                @foreach (var h in Agenda.Horas)
+                {
+                    <option value="@h">@Texto.Hora(h)</option>
+                }
+            </select>
+            <button type="submit" class="boton grande">@Iconos.Svg("calendar", 22) Reservar ahora</button>
+        </form>
+    </div>
+</section>
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Nuestro equipo</p>
+    <h2 class="titulo-seccion">Profesionales expertos</h2>
+    @await Html.PartialAsync("_Equipo", empleados)
+</section>

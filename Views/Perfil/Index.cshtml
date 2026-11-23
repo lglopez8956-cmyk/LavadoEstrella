@@ -1,0 +1,96 @@
+@model PerfilVM
+@{
+    ViewData["Title"] = "Mi perfil";
+}
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Mi perfil</p>
+
+    <div class="perfil-cabecera panel">
+        <div class="avatar" aria-hidden="true">@Texto.Iniciales(Model.Usuario.Nombre)</div>
+        <div class="perfil-datos">
+            <h1>@Model.Usuario.Nombre</h1>
+            <p class="tenue">@Model.Usuario.Correo · @Model.Usuario.Telefono</p>
+            <p class="tenue">Cliente desde @Texto.Fecha(Model.Usuario.CreadoEn)</p>
+        </div>
+        <form method="post" asp-controller="Cuenta" asp-action="Salir">
+            <button type="submit" class="boton secundario">Cerrar sesión</button>
+        </form>
+    </div>
+
+    <div class="estadisticas">
+        <div class="estadistica"><strong>@Model.ServiciosRealizados</strong><span>Servicios realizados</span></div>
+        <div class="estadistica"><strong>@Texto.Pesos(Model.TotalInvertido)</strong><span>Total en servicios</span></div>
+        <div class="estadistica"><strong>@Model.Proximas.Count</strong><span>Reservas próximas</span></div>
+    </div>
+
+    <div class="panel">
+        <div class="fila-titulo">
+            <h2>Próximas reservas</h2>
+            <a class="boton" asp-controller="Reservas" asp-action="Crear">Nueva reserva</a>
+        </div>
+        @if (Model.Proximas.Count == 0)
+        {
+            <p class="tenue">No tienes reservas próximas.</p>
+        }
+        else
+        {
+            <ul class="reservas">
+                @foreach (var r in Model.Proximas)
+                {
+                    <li>
+                        <div>
+                            <strong>@r.Servicio?.Nombre</strong>
+                            <span class="tenue">@Texto.Fecha(r.FechaHora) · @Texto.Hora(r.FechaHora.Hour) · @Texto.Pesos(r.Precio)</span>
+                        </div>
+                        <form method="post" asp-controller="Reservas" asp-action="Cancelar" asp-route-id="@r.Id">
+                            <button type="submit" class="boton secundario pequeno">Cancelar</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <div class="panel">
+        <h2>Historial de servicios</h2>
+        @if (Model.Historial.Count == 0)
+        {
+            <p class="tenue">Aquí aparecerán los servicios que ya realizaste.</p>
+        }
+        else
+        {
+            <div class="tabla-envoltura">
+                <table>
+                    <thead>
+                        <tr><th>Fecha</th><th>Servicio</th><th>Precio</th><th>Estado</th></tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var r in Model.Historial)
+                    {
+                        <tr>
+                            <td>@Texto.Fecha(r.FechaHora) · @Texto.Hora(r.FechaHora.Hour)</td>
+                            <td><strong>@r.Servicio?.Nombre</strong></td>
+                            <td>@Texto.Pesos(r.Precio)</td>
+                            <td><span class="estado @r.Estado.ToString().ToLower()">@r.Estado.Nombre()</span></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+
+    <div class="panel">
+        <h2>Mis datos</h2>
+        <form method="post" asp-controller="Perfil" asp-action="Actualizar" class="formulario">
+            <label for="Nombre">Nombre</label>
+            <input id="Nombre" name="Nombre" value="@Model.Usuario.Nombre" maxlength="80" required />
+            <label for="Telefono">Teléfono</label>
+            <input id="Telefono" name="Telefono" type="tel" value="@Model.Usuario.Telefono" maxlength="30" required />
+            <label for="CorreoLectura">Correo</label>
+            <input id="CorreoLectura" value="@Model.Usuario.Correo" disabled />
+            <p><button type="submit" class="boton">Guardar cambios</button></p>
+        </form>
+    </div>
+</section>

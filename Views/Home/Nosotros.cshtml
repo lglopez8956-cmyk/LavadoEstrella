@@ -1,0 +1,14 @@
+@model List<Empleado>
+@{
+    ViewData["Title"] = "Nosotros";
+}
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Quiénes somos</p>
+    <h1 class="titulo-seccion">Cuidamos tu vehículo como si fuera nuestro</h1>
+    <p class="sub centrado">@Negocio.Value.Nombre es un servicio de lavado especializado: usamos productos de calidad, respetamos tu tiempo y cuidamos cada detalle del vehículo.</p>
+
+    <p class="eyebrow" style="margin-top: 40px">Nuestro equipo</p>
+    <h2 class="titulo-seccion">Profesionales expertos</h2>
+    @await Html.PartialAsync("_Equipo", Model)
+</section>

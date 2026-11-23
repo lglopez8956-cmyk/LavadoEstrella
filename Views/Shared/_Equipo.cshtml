@@ -1,0 +1,25 @@
+@model List<Empleado>
+
+<div class="equipo">
+    @foreach (var e in Model)
+    {
+        <article class="miembro">
+            <img src="@e.FotoUrl" alt="Foto de @e.Nombre" loading="lazy" />
+            <div>
+                <h3>@e.Nombre</h3>
+                <p class="cargo">@e.Cargo</p>
+                <p class="tenue">@e.Descripcion</p>
+                <p class="redes">
+                    @if (!string.IsNullOrWhiteSpace(Negocio.Value.Facebook))
+                    {
+                        <a href="@Negocio.Value.Facebook" target="_blank" rel="noopener" aria-label="Facebook de @Negocio.Value.Nombre">@Iconos.Svg("facebook", 22)</a>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Negocio.Value.WhatsApp))
+                    {
+                        <a href="https://wa.me/@Negocio.Value.WhatsApp" target="_blank" rel="noopener" aria-label="WhatsApp de @Negocio.Value.Nombre">@Iconos.Svg("whatsapp", 22)</a>
+                    }
+                </p>
+            </div>
+        </article>
+    }
+</div>

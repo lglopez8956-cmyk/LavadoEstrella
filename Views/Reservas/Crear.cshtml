@@ -1,0 +1,41 @@
+@model ReservaVM
+@{
+    ViewData["Title"] = "Reservar";
+    var servicios = (List<Servicio>)ViewData["Servicios"]!;
+}
+
+<section class="seccion contenedor angosto">
+    <p class="eyebrow">Reserva tu cita</p>
+    <h1 class="titulo-seccion">Agenda tu servicio</h1>
+
+    <form method="post" asp-controller="Reservas" asp-action="Crear" class="formulario panel">
+        <div asp-validation-summary="ModelOnly" class="error"></div>
+
+        <label for="ServicioId">Servicio</label>
+        <select id="ServicioId" name="ServicioId">
+            <option value="">Selecciona un servicio</option>
+            @foreach (var s in servicios)
+            {
+                <option value="@s.Id" selected="@(Model.ServicioId == s.Id)">@s.Nombre · @Texto.Pesos(s.Precio)</option>
+            }
+        </select>
+        <span asp-validation-for="ServicioId" class="error"></span>
+
+        <label for="Fecha">Fecha</label>
+        <input id="Fecha" name="Fecha" type="date" value="@(Model.Fecha?.ToString("yyyy-MM-dd"))" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="Fecha" class="error"></span>
+
+        <label for="Hora">Hora</label>
+        <select id="Hora" name="Hora">
+            <option value="">Selecciona una hora</option>
+            @foreach (var h in Agenda.Horas)
+            {
+                <option value="@h" selected="@(Model.Hora == h)">@Texto.Hora(h)</option>
+            }
+        </select>
+        <span asp-validation-for="Hora" class="error"></span>
+
+        <p class="tenue">Cada hora tiene cupo limitado. La reserva quedará guardada en tu historial de Mi perfil.</p>
+        <button type="submit" class="boton grande">@Iconos.Svg("calendar", 22) Confirmar reserva</button>
+    </form>
+</section>

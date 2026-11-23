@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Contacto";
+}
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Contacto</p>
+    <h1 class="titulo-seccion">Estamos para ayudarte</h1>
+
+    <div class="contacto">
+        <div class="panel">
+            <ul class="contacto-lista">
+                <li>@Iconos.Svg("pin", 26)<div><strong>Dirección</strong><span>@Negocio.Value.Direccion</span></div></li>
+                <li>@Iconos.Svg("clock", 26)<div><strong>Horario</strong><span>@Negocio.Value.Horario</span></div></li>
+                <li>@Iconos.Svg("phone", 26)<div><strong>Teléfono</strong><span>@Negocio.Value.Telefono</span></div></li>
+            </ul>
+        </div>
+        <div class="panel">
+            <h2>Escríbenos</h2>
+            <p class="tenue">La forma más rápida de resolver dudas es por WhatsApp.</p>
+            <p>
+                <a class="boton" href="https://wa.me/@Negocio.Value.WhatsApp" target="_blank" rel="noopener">@Iconos.Svg("whatsapp", 22) Abrir WhatsApp</a>
+            </p>
+            <p class="tenue">¿Ya sabes qué necesitas? Reserva directamente:</p>
+            <a class="boton secundario" asp-controller="Reservas" asp-action="Crear">Reservar un servicio</a>
+        </div>
+    </div>
+</section>

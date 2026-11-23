@@ -1,0 +1,65 @@
+@{
+    var controlador = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var accion = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    var autenticado = User.Identity?.IsAuthenticated == true;
+    string Activo(string c, string a) => (controlador == c && accion == a) ? "activo" : "";
+}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewData["Title"] is string t ? t + " · " : "")@Negocio.Value.Nombre @Negocio.Value.Lema</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+<header class="cabecera">
+    <div class="contenedor cabecera-fila">
+        <a class="logo" asp-controller="Home" asp-action="Index" aria-label="@Negocio.Value.Nombre, inicio">
+            <img src="~/img/logo.png" alt="@Negocio.Value.Nombre @Negocio.Value.Lema" />
+        </a>
+        <nav class="menu" aria-label="Principal">
+            <a class="@Activo("Home", "Index")" asp-controller="Home" asp-action="Index">Inicio</a>
+            <a class="@Activo("Servicios", "Index")" asp-controller="Servicios" asp-action="Index">Servicios</a>
+            <a class="@Activo("Home", "Nosotros")" asp-controller="Home" asp-action="Nosotros">Nosotros</a>
+            <a class="@Activo("Home", "Promociones")" asp-controller="Home" asp-action="Promociones">Promociones</a>
+            <a class="@Activo("Home", "Contacto")" asp-controller="Home" asp-action="Contacto">Contacto</a>
+        </nav>
+        <div class="acciones">
+            @if (autenticado)
+            {
+                <a class="cuenta @(controlador == "Perfil" ? "activo" : "")" asp-controller="Perfil" asp-action="Index">@Iconos.Svg("user", 20) Mi perfil</a>
+            }
+            else
+            {
+                <a class="cuenta" asp-controller="Cuenta" asp-action="Login">@Iconos.Svg("user", 20) Ingresar</a>
+            }
+            <a class="boton" asp-controller="Reservas" asp-action="Crear">@Iconos.Svg("calendar", 20) Reservar</a>
+        </div>
+    </div>
+</header>
+
+@if (TempData["Mensaje"] is string mensaje)
+{
+    <div class="contenedor"><p class="aviso" role="status">@mensaje</p></div>
+}
+
+@RenderBody()
+
+<section class="beneficios" aria-label="Por qué elegirnos">
+    <div class="contenedor beneficios-rejilla">
+        <div class="beneficio">@Iconos.Svg("shield", 40)<div><strong>Seguridad garantizada</strong><span>Cuidamos tu vehículo como si fuera nuestro</span></div></div>
+        <div class="beneficio">@Iconos.Svg("leaf", 40)<div><strong>Productos premium</strong><span>Usamos productos de alta calidad y ecoamigables</span></div></div>
+        <div class="beneficio">@Iconos.Svg("clock", 40)<div><strong>Puntualidad</strong><span>Respetamos tu tiempo, cumplimos lo prometido</span></div></div>
+        <div class="beneficio">@Iconos.Svg("star", 40)<div><strong>Satisfacción</strong><span>Clientes satisfechos nos recomiendan</span></div></div>
+    </div>
+</section>
+
+<footer class="pie">
+    <div class="contenedor pie-fila">
+        <span>© @DateTime.Now.Year @Negocio.Value.Nombre · @Negocio.Value.Lema</span>
+        <span>@Negocio.Value.Horario</span>
+    </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+@model RegistroVM
+@{
+    ViewData["Title"] = "Crear cuenta";
+}
+
+<section class="seccion contenedor angosto">
+    <p class="eyebrow">Mi cuenta</p>
+    <h1 class="titulo-seccion">Crea tu cuenta</h1>
+
+    <form method="post" asp-controller="Cuenta" asp-action="Registro" class="formulario panel">
+        <div asp-validation-summary="ModelOnly" class="error"></div>
+
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" autocomplete="name" />
+        <span asp-validation-for="Nombre" class="error"></span>
+
+        <label asp-for="Correo"></label>
+        <input asp-for="Correo" type="email" autocomplete="email" />
+        <span asp-validation-for="Correo" class="error"></span>
+
+        <label asp-for="Telefono"></label>
+        <input asp-for="Telefono" type="tel" autocomplete="tel" />
+        <span asp-validation-for="Telefono" class="error"></span>
+
+        <label asp-for="Clave"></label>
+        <input asp-for="Clave" type="password" autocomplete="new-password" />
+        <span asp-validation-for="Clave" class="error"></span>
+
+        <label asp-for="ConfirmarClave"></label>
+        <input asp-for="ConfirmarClave" type="password" autocomplete="new-password" />
+        <span asp-validation-for="ConfirmarClave" class="error"></span>
+
+        <button type="submit" class="boton grande">Crear cuenta</button>
+        <p class="tenue">¿Ya tienes cuenta? <a asp-controller="Cuenta" asp-action="Login">Ingresa</a></p>
+    </form>
+</section>

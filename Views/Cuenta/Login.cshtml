@@ -1,0 +1,26 @@
+@model LoginVM
+@{
+    ViewData["Title"] = "Ingresar";
+}
+
+<section class="seccion contenedor angosto">
+    <p class="eyebrow">Mi cuenta</p>
+    <h1 class="titulo-seccion">Ingresa a tu cuenta</h1>
+
+    <form method="post" asp-controller="Cuenta" asp-action="Login" class="formulario panel">
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div asp-validation-summary="ModelOnly" class="error"></div>
+
+        <label asp-for="Correo"></label>
+        <input asp-for="Correo" type="email" autocomplete="email" />
+        <span asp-validation-for="Correo" class="error"></span>
+
+        <label asp-for="Clave"></label>
+        <input asp-for="Clave" type="password" autocomplete="current-password" />
+        <span asp-validation-for="Clave" class="error"></span>
+
+        <button type="submit" class="boton grande">Ingresar</button>
+        <p class="tenue">¿No tienes cuenta? <a asp-controller="Cuenta" asp-action="Registro">Regístrate</a></p>
+        <p class="tenue">Para probar: <strong>demo@estrella.com</strong> · contraseña <strong>Demo1234</strong></p>
+    </form>
+</section>

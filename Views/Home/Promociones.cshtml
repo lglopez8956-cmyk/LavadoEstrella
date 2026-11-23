@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Promociones";
+}
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Promociones</p>
+    <h1 class="titulo-seccion">Ahorra con nuestros combos</h1>
+
+    <div class="promos">
+        <article class="promo">
+            <h2>Combo Lavado + Lavado motor</h2>
+            <p class="precio">$40.000 <s class="tenue">$45.000</s></p>
+            <p class="tenue">Deja el exterior y el motor impecables en una sola visita.</p>
+            <a class="boton" asp-controller="Reservas" asp-action="Crear">Reservar</a>
+        </article>
+        <article class="promo">
+            <h2>Combo Pulido + Lavado</h2>
+            <p class="precio">$150.000 <s class="tenue">$160.000</s></p>
+            <p class="tenue">Brillo de exhibición: lavado completo y pulido profesional.</p>
+            <a class="boton" asp-controller="Reservas" asp-action="Crear">Reservar</a>
+        </article>
+    </div>
+</section>

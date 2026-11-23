@@ -1,0 +1,11 @@
+@model List<Servicio>
+@{
+    ViewData["Title"] = "Servicios";
+}
+
+<section class="seccion contenedor">
+    <p class="eyebrow">Nuestros servicios</p>
+    <h1 class="titulo-seccion">El cuidado que tu vehículo merece</h1>
+    <p class="sub centrado">Elige el servicio y agenda tu cita en un par de pasos.</p>
+    @await Html.PartialAsync("_Servicios", Model)
+</section>
